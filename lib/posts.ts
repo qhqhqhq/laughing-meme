@@ -26,7 +26,7 @@ export function getSortedPostData(){
             id,
             // data元素是gray-matter格式下markdown文档中的标头, 存储一些元数据
             // 该结构还包括content元素, 包括正文内容
-            ...matterResult.data,
+            ...(matterResult.data as {date:string; title:string}),
         }
     })
     // 对返回结果排序
@@ -55,7 +55,7 @@ export function getAllPostIds(){
     });
 }
 
-export async function getPostData(id){
+export async function getPostData(id:string){
     const fullPath = path.join(postsDir,`${id}.md`);
     const fileContents = fs.readFileSync(fullPath,'utf8');
 
@@ -69,7 +69,7 @@ export async function getPostData(id){
     return {
         id,
         contentHtml,
-        ...matterResult.data,
+        ...(matterResult.data) as {date:string, title:string},
     };
 
     return{
